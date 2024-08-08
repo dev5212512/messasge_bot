@@ -8,13 +8,12 @@ const app = new App({
   socketMode: true, // add this
   appToken: process.env.SLACK_APP_TOKEN, // add this
   logLevel: 'debug',
-  scopes: ['channels:history', 'chat:write', 'commands']
+  port: process.env.PORT || 3000
 });
 
 
 // Not working
-app.message('hello', async ({ message, say }) => {
-  console.log('=-----------------------------in---------------------')
+app.message( async ({ message, say }) => {
   // say() sends a message to the channel where the event was triggered
   await say(`Hey there <@${message.user}>!`);
 });
@@ -23,7 +22,7 @@ app.message('hello', async ({ message, say }) => {
 app.event('channel_rename', async({event, client, logger}) => {
   await client.chat.postMessage({
     channel: welcomeChannelId,
-    text: JSON.stringify(event)
+    text: JSON.stringify(event, null, 2)
   })
 })
 
@@ -37,7 +36,7 @@ app.command('/socketslash', async ({ command, ack, say }) => {
 
 (async () => {
   // Start the app
-  await app.start(process.env.PORT || 3000);
+  await app.start();
 
   console.log('⚡️ Bolt app is running!');
 })();
