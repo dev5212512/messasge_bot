@@ -11,7 +11,6 @@ const app = new App({
   port: process.env.PORT || 3000
 });
 
-
 // Not working
 app.message( async ({ message, say }) => {
   // say() sends a message to the channel where the event was triggered
@@ -25,7 +24,6 @@ app.event('channel_rename', async({event, client, logger}) => {
     text: JSON.stringify(event, null, 2)
   })
 })
-
 
 app.command('/socketslash', async ({ command, ack, say }) => {
   // Acknowledge command request
