@@ -28,6 +28,13 @@ app.event('channel_rename', async({event, client, logger}) => {
 })
 
 
+app.command('/socketslash', async ({ command, ack, say }) => {
+  // Acknowledge command request
+  await ack();
+
+  await say(`${command.text}`);
+});
+
 (async () => {
   // Start the app
   await app.start(process.env.PORT || 3000);
